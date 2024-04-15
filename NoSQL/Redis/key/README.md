@@ -205,16 +205,18 @@
   相关命令：
   
   - SSCAN 命令用于迭代集合键中的元素。
+  
+    ```redis
+    SCAN cursor [MATCH pattern] [COUNT count]
+    ```
+  
+    - cursor：游标。
+    - pattern：匹配的模式。
+    - count：可选，用于指定每次迭代返回的 key 的数量，默认值为 10 。
+  
   - HSCAN 命令用于迭代哈希键中的键值对。
+  
   - ZSCAN 命令用于迭代有序集合中的元素（包括元素成员和元素分值）。
-  
-  ```redis
-  SCAN cursor [MATCH pattern] [COUNT count]
-  ```
-  
-  - cursor：游标。
-  - pattern：匹配的模式。
-  - count：可选，用于指定每次迭代返回的 key 的数量，默认值为 10 。
   
 - **key存储值的类型**：key不存在返回none
 
