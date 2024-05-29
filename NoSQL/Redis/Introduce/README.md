@@ -1,6 +1,6 @@
 # Redis 概述
 
-Redis(远程字典服务器，**RE**mote **Di**ctionary **S**erver) 是一个开源的高性能键值对数据库。使用ANSIC语言编写遵守BSD协议，是一个高性能的Key-Value数据库提供了丰富的数据结构，例如String、Hash、List、Set、SortedSet等适应不同场最下的存储需求，并借助许多高层级的接口使其可以胜任如缓存、队列系统等不同的角色。数据是存在内存中的，同时Redis支持事务、持久化、LUA脚本、发布/订阅、缓存淘汰、流技术等多种功能特性提供了主从模式、Redis Sentinel和Redis Cluster集群架构方案。
+Redis(远程字典服务器，**RE**mote **Di**ctionary **S**erver) 是一个开源的**高性能的基于内存的键值对(Key-Value)数据库**。使用ANSIC语言编写遵守BSD协议，提供了丰富的数据结构，例如String、Hash、List、Set、SortedSet等适应不同场最下的存储需求，并借助许多高层级的接口使其可以胜任如缓存、队列系统等不同的角色。数据是存在内存中的，同时Redis支持事务、持久化、LUA脚本、发布/订阅、缓存淘汰、流技术等多种功能特性提供了主从模式、Redis Sentinel和Redis Cluster集群架构方案。
 
 **官方地址**：
 
@@ -14,7 +14,7 @@ Redis(远程字典服务器，**RE**mote **Di**ctionary **S**erver) 是一个开
 
 **Redis 命令参考**：http://doc.redisfans.com
 
-**Redis之父安特雷兹**：
+**Redis之父安特雷兹**：Redis之父Salvatore Sanfilippo，一名意大利程序员，大家更习惯称呼他Antirez
 
 - Github：https://github.com/antirez
 - 个人博客：http://antirez.com/latest/0
@@ -61,11 +61,16 @@ Redis(远程字典服务器，**RE**mote **Di**ctionary **S**erver) 是一个开
 
   Redis数据操作主要在内存，而mysql主要存储在磁盘
 
-  Redis在某一些场景使用中要明显优于mysql，比如计数器、排行榜等方面
+  Redis在某一些场景使用中要明显优于DBMS，比如计数器、排行榜等方面
 
-  Redis通常用于一些特定场景，需要与Mysql一起配合使用，两者并不是相互替换和竞争关系，而是共用和配合使用
+  Redis通常用于一些特定场景，需要与DBMS 一起配合使用，两者并不是相互替换和竞争关系，而是共用和配合使用，客户端从 DBMS 中查询出的数据首先写入到 Redis 中，后续无论哪个客户端再需要访问该数据，直接读取 Redis 中的即可，不仅减小了 RT，而且降低了 DBMS 的压力。
 
   ![](https://cdn.jsdelivr.net/gh/letengzz/tc2@main/img%E4%B8%8B%E8%BD%BD.png)
+
+  根据 Redis 缓存的数据与 DBMS 中数据的同步性划分：
+
+  - **同步缓存**：实时同步缓存是指，DBMS 中数据更新后，Redis 缓存中的存放的相关数据会被立即清除，以促使再有对该数据的访问请求到来时，必须先从 DBMS 中查询获取到最新数据，然后再写入到 Redis。
+  - **阶段性同步缓存**：阶段性同步缓存是指，Redis 缓存中的数据允许在一段时间内与 DBMS 中的数据不完全一致。而这个时间段就是这个缓存数据的过期时间。
 
 - **内存存储和持久化**：内存存储和持久化(RDB+AOF) ，Redis支持异步将内存中的数据写到硬盘上，同时不影响继续服务
 
