@@ -6,3 +6,4 @@
 - Linux 安装
 - [Windows 卸载](Uninstall/Windows/README.md)
 - [MacOS 卸载](Uninstall/MacOS/README.md)
+- [Docker 安装](docker/README.md)
